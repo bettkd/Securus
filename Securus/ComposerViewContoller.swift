@@ -8,27 +8,30 @@
 
 import UIKit
 import Parse
-//import CoreLocation
+import CoreLocation
 
 class ComposerViewController: UIViewController, UITextViewDelegate, CLLocationManagerDelegate {
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var descriptionTextView: UITextView!
     var placeholderLabel : UILabel!
-    
     @IBOutlet weak var remainingLabel: UILabel!
     
-    
-    /*let locationManager = CLLocationManager()
-    var locValue: CLLocation!*/
+    let locationManager = CLLocationManager()
+    var locValue: CLLocationCoordinate2D! = CLLocationCoordinate2D()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Request Location from User
-        /*locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        // Authorize and update location
+        locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()*/
+        locationManager.startUpdatingLocation()
+        
+        
+        // Retrieving the location co-ordinate
+        // let myLocation:CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: locValue.latitude, longitude: locValue.longitude)
+        // Do reverseGeocodeLocation to get name of city, zip-code etc...
+        
         
         // Show the current visitor's username
         if let pUserName = PFUser.currentUser()?["username"] as? String {
@@ -49,6 +52,11 @@ class ComposerViewController: UIViewController, UITextViewDelegate, CLLocationMa
         placeholderLabel.frame.origin = CGPointMake(5, descriptionTextView.font!.pointSize / 2)
         placeholderLabel.textColor = UIColor(white: 0, alpha: 0.3)
         placeholderLabel.hidden = !descriptionTextView.text.isEmpty
+    }
+    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        self.locValue = manager.location!.coordinate
+        print("locations = \(locValue.latitude) \(locValue.longitude)")
     }
     
     // Make placeholder text disappear from description text view
@@ -87,31 +95,6 @@ class ComposerViewController: UIViewController, UITextViewDelegate, CLLocationMa
         }
     }
     
-    /*
-    //Get the current location
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        if status == .AuthorizedAlways {
-            if CLLocationManager.isMonitoringAvailableForClass(CLBeaconRegion.self) {
-                if CLLocationManager.isRangingAvailable() {
-                    locationManager.startUpdatingLocation()
-                    locValue = self.locationManager.location
-                }
-            }
-        }
-    }
-
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.last {
-            locValue = location
-            locationManager.stopUpdatingLocation()
-            print("locations = \(locValue.coordinate.latitude) \(locValue.coordinate.longitude)", terminator: "\n")
-        }
-    }
-    
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
-        print("Failed to find user's location: \(error.localizedDescription)")
-    }*/
-    
     @IBAction func postEvent(sender: AnyObject) {
         if descriptionTextView.text.isEmpty {
             let alert = UIAlertView(title: "Invalid Description", message: "Please write a short description....", delegate: self, cancelButtonTitle: "OK")
@@ -120,8 +103,11 @@ class ComposerViewController: UIViewController, UITextViewDelegate, CLLocationMa
             let event:PFObject = PFObject(className: "Events")
             event["user"] = PFUser.currentUser()
             event["event"] = descriptionTextView.text
-            /*event["longitude"] = locValue.coordinate.longitude
-            event["latitude"] = locValue.coordinate.latitude*/
+            if locValue != nil {
+                locationManager.stopUpdatingLocation()
+                event["longitude"] = locValue!.longitude as Double
+                event["latitude"] = locValue!.latitude as Double
+            }
             event.saveInBackground()
         
             dismissViewControllerAnimated(true, completion: nil)
