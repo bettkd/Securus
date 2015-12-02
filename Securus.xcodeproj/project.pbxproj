@@ -14,7 +14,7 @@
 		E02347141B677CD3004F2DBE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E02347121B677CD3004F2DBE /* Main.storyboard */; };
 		E02347161B677CD3004F2DBE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E02347151B677CD3004F2DBE /* Images.xcassets */; };
 		E02347191B677CD3004F2DBE /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E02347171B677CD3004F2DBE /* LaunchScreen.xib */; };
-		E02347251B677CD3004F2DBE /* ParseDemoTests in Sources */ = {isa = PBXBuildFile; fileRef = E02347241B677CD3004F2DBE /* ParseDemoTests */; };
+		E02347251B677CD3004F2DBE /* SecurusTests in Sources */ = {isa = PBXBuildFile; fileRef = E02347241B677CD3004F2DBE /* SecurusTests */; };
 		E02347541B6A50F6004F2DBE /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E02347531B6A50F6004F2DBE /* SignUpViewController.swift */; };
 		E02347581B6BE242004F2DBE /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E02347571B6BE242004F2DBE /* ResetPasswordViewController.swift */; };
 		E023475E1B6BE32A004F2DBE /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E023475D1B6BE32A004F2DBE /* HomeViewController.swift */; };
@@ -54,8 +54,8 @@
 		E02347151B677CD3004F2DBE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E02347181B677CD3004F2DBE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		E023471E1B677CD3004F2DBE /* Securus.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Securus.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E02347231B677CD3004F2DBE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E02347241B677CD3004F2DBE /* ParseDemoTests */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ParseDemoTests; path = ../ParseDemoTests; sourceTree = "<group>"; };
+		E02347231B677CD3004F2DBE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../SecurusTests/Info.plist; sourceTree = "<group>"; };
+		E02347241B677CD3004F2DBE /* SecurusTests */ = {isa = PBXFileReference; lastKnownFileType = folder; path = SecurusTests; sourceTree = SOURCE_ROOT; };
 		E02347531B6A50F6004F2DBE /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		E02347571B6BE242004F2DBE /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
 		E023475D1B6BE32A004F2DBE /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -107,8 +107,8 @@
 		E02347001B677CD3004F2DBE = {
 			isa = PBXGroup;
 			children = (
-				E023472E1B679009004F2DBE /* Frameworks */,
 				E023470B1B677CD3004F2DBE /* Securus */,
+				E023472E1B679009004F2DBE /* Frameworks */,
 				E02347211B677CD3004F2DBE /* SecurusTests */,
 				E023470A1B677CD3004F2DBE /* Products */,
 			);
@@ -153,7 +153,7 @@
 		E02347211B677CD3004F2DBE /* SecurusTests */ = {
 			isa = PBXGroup;
 			children = (
-				E02347241B677CD3004F2DBE /* ParseDemoTests */,
+				E02347241B677CD3004F2DBE /* SecurusTests */,
 				E02347221B677CD3004F2DBE /* Supporting Files */,
 			);
 			name = SecurusTests;
@@ -313,7 +313,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E02347251B677CD3004F2DBE /* ParseDemoTests in Sources */,
+				E02347251B677CD3004F2DBE /* SecurusTests in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -442,7 +442,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				INFOPLIST_FILE = ParseDemo/Info.plist;
+				INFOPLIST_FILE = Securus/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dominicbett.Securus;
@@ -463,7 +463,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				INFOPLIST_FILE = ParseDemo/Info.plist;
+				INFOPLIST_FILE = Securus/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dominicbett.Securus;
@@ -484,7 +484,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = ParseDemoTests/Info.plist;
+				INFOPLIST_FILE = SecurusTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.abearablecode.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Securus;
@@ -500,7 +500,7 @@
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = ParseDemoTests/Info.plist;
+				INFOPLIST_FILE = SecurusTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.abearablecode.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Securus;
