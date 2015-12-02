@@ -25,7 +25,15 @@ class ComposerViewController: UIViewController, UITextViewDelegate, CLLocationMa
         // Authorize and update location
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
+        
+        let status = CLLocationManager.authorizationStatus()
+        if status == CLAuthorizationStatus.AuthorizedWhenInUse {
+            locationManager.startUpdatingLocation()
+        } else {
+            print("Location Status Not Authorized")
+            let alert = UIAlertView(title: "Location Services Required", message: "Go to Settings > Securus > Locations > When Using the App to enable location services", delegate: self, cancelButtonTitle: "OK")
+            alert.show()
+        }
         
         
         // Retrieving the location co-ordinate
@@ -57,6 +65,10 @@ class ComposerViewController: UIViewController, UITextViewDelegate, CLLocationMa
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         self.locValue = manager.location!.coordinate
         print("locations = \(locValue.latitude) \(locValue.longitude)")
+    }
+    
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+        print("Couldn't get your location")
     }
     
     // Make placeholder text disappear from description text view
