@@ -130,18 +130,35 @@ class TimelineTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        
+        let event = self.timelineData.objectAtIndex(indexPath.row) as! PFObject
+        
         let deleteAction = UITableViewRowAction(style: .Normal, title: "Delete"){(action: UITableViewRowAction!, indexPath: NSIndexPath!) -> Void in
-            let event = self.timelineData.objectAtIndex(indexPath.row) as! PFObject
+        
             let query = PFQuery(className: "Events")
             query.whereKey("objectId", equalTo: event.objectId!)
             query.findObjectsInBackgroundWithBlock {(objects, error) -> Void in
-                for object in objects! {
-                    object.deleteInBackground()
+                if error == nil{
+                    objects?.last!.deleteInBackground()
+                } else {
+                    print (error)
                 }
                 self.loadData()
             }
         }
         deleteAction.backgroundColor = UIColor.redColor()
+        let query1 = PFQuery(className: "Events")
+        query1.whereKey("user", equalTo: (event.objectId)!)
+        query1.findObjectsInBackgroundWithBlock {(users, error) -> Void in
+            if error == nil{
+                if users?.last!.objectId == PFUser.currentUser()?.objectId {
+                    print("Deleting someone else's stuff is illegal!")
+                }
+            } else {
+                print (error)
+            }
+        }
+
         return [deleteAction]
     }
     
