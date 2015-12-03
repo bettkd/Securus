@@ -129,13 +129,33 @@ class TimelineTableViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        let deleteAction = UITableViewRowAction(style: .Normal, title: "Delete"){(action: UITableViewRowAction!, indexPath: NSIndexPath!) -> Void in
+            let event = self.timelineData.objectAtIndex(indexPath.row) as! PFObject
+            let query = PFQuery(className: "Events")
+            query.whereKey("objectId", equalTo: event.objectId!)
+            query.findObjectsInBackgroundWithBlock {(objects, error) -> Void in
+                for object in objects! {
+                    object.deleteInBackground()
+                }
+                self.loadData()
+            }
+        }
+        deleteAction.backgroundColor = UIColor.redColor()
+        return [deleteAction]
+    }
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+    }
+    
     @IBAction func voteUp(sender: AnyObject){
         let event: PFObject = self.timelineData.objectAtIndex(sender.tag) as! PFObject
         
         let votes = (event.objectForKey("votes")?.integerValue)! + 1
         
         let query = PFQuery(className: "Events")
-        query.getObjectInBackgroundWithId(event.objectId!, block: {(object:PFObject?, error) in
+        query.getObjectInBackgroundWithId(event.objectId!, block: {(object:PFObject?, error) -> Void in
             if error != nil {
                 print(error)
             } else if let the_event = object{
@@ -152,7 +172,7 @@ class TimelineTableViewController: UITableViewController {
         let votes = (event.objectForKey("votes")?.integerValue)! - 1
         
         let query = PFQuery(className: "Events")
-        query.getObjectInBackgroundWithId(event.objectId!, block: {(object:PFObject?, error) in
+        query.getObjectInBackgroundWithId(event.objectId!, block: {(object:PFObject?, error) -> Void in
             if error != nil {
                 print(error)
             } else if let the_event = object{
