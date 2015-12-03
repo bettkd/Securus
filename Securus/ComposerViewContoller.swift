@@ -133,6 +133,7 @@ class ComposerViewController: UIViewController, UITextViewDelegate, CLLocationMa
                 event["longitude"] = locValue!.longitude as Double
                 event["latitude"] = locValue!.latitude as Double
             }
+            event["votes"] = 0 as Int
             event.saveInBackground()
         
             dismissViewControllerAnimated(true, completion: nil)

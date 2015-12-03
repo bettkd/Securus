@@ -13,7 +13,9 @@ class TimelineTableViewCell: UITableViewCell {
     @IBOutlet weak var usernameText: UILabel! = UILabel()
     @IBOutlet weak var dateTimeText: UILabel! = UILabel()
     @IBOutlet weak var descriptionText: UITextView! = UITextView()
-    
+    @IBOutlet weak var voteCountText: UILabel! = UILabel()
+    @IBOutlet weak var voteUp: UIButton!
+    @IBOutlet weak var voteDown: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()

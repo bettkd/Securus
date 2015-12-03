@@ -85,13 +85,13 @@ class TimelineTableViewController: UITableViewController {
     
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell:TimelineTableViewCell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! TimelineTableViewCell
+        let cell: TimelineTableViewCell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! TimelineTableViewCell
         
         // Retrieve data
-        let event:PFObject = self.timelineData.objectAtIndex(indexPath.row) as! PFObject
+        let event: PFObject = self.timelineData.objectAtIndex(indexPath.row) as! PFObject
         
         // Get username
-        let findUser:PFQuery = PFUser.query()!
+        let findUser: PFQuery = PFUser.query()!
         //findUser.whereKey("objectId", equalTo: (PFUser.currentUser()?.objectId!)!)
         findUser.whereKey("objectId", equalTo: (event.valueForKey("user")?.objectId)!)
         findUser.findObjectsInBackgroundWithBlock{
@@ -101,21 +101,66 @@ class TimelineTableViewController: UITableViewController {
             }
         }
         
+        // DateTime
         let dateFormatter:NSDateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
         cell.dateTimeText.text = dateFormatter.stringFromDate(event.createdAt!)
         
+        // Description
         cell.descriptionText.text = event.objectForKey("event") as! String
+        
+        // Vote Count
+        cell.voteUp.tag = indexPath.row
+        cell.voteUp.addTarget(self, action: "voteUp:", forControlEvents: .TouchUpInside)
+        cell.voteDown.tag = indexPath.row
+        cell.voteDown.addTarget(self, action: "voteDown:", forControlEvents: .TouchUpInside)
+        
+        cell.voteCountText.text = event.objectForKey("votes")?.stringValue
         
         UIView.animateWithDuration(0.2, animations: {
             cell.usernameText.alpha = 1
             cell.dateTimeText.alpha = 1
             cell.descriptionText.alpha = 1
+            cell.voteCountText.alpha = 1
         })
         
         // Configure the cell...
     
         return cell
+    }
+    
+    @IBAction func voteUp(sender: AnyObject){
+        let event: PFObject = self.timelineData.objectAtIndex(sender.tag) as! PFObject
+        
+        let votes = (event.objectForKey("votes")?.integerValue)! + 1
+        
+        let query = PFQuery(className: "Events")
+        query.getObjectInBackgroundWithId(event.objectId!, block: {(object:PFObject?, error) in
+            if error != nil {
+                print(error)
+            } else if let the_event = object{
+                the_event["votes"] = votes
+                the_event.saveInBackground()
+            }
+        })
+        refresh(self)
+    }
+    
+    @IBAction func voteDown(sender: AnyObject){
+        let event: PFObject = self.timelineData.objectAtIndex(sender.tag) as! PFObject
+        
+        let votes = (event.objectForKey("votes")?.integerValue)! - 1
+        
+        let query = PFQuery(className: "Events")
+        query.getObjectInBackgroundWithId(event.objectId!, block: {(object:PFObject?, error) in
+            if error != nil {
+                print(error)
+            } else if let the_event = object{
+                the_event["votes"] = votes
+                the_event.saveInBackground()
+            }
+        })
+        refresh(self)
     }
     
     

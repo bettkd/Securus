@@ -133,11 +133,11 @@
 				E023475D1B6BE32A004F2DBE /* HomeViewController.swift */,
 				E02347531B6A50F6004F2DBE /* SignUpViewController.swift */,
 				E02347571B6BE242004F2DBE /* ResetPasswordViewController.swift */,
-				E02347151B677CD3004F2DBE /* Images.xcassets */,
-				E02347171B677CD3004F2DBE /* LaunchScreen.xib */,
-				E023470C1B677CD3004F2DBE /* Supporting Files */,
 				8BAB29E81C0D54A100927C67 /* TimelineTableViewController.swift */,
 				8BAB29EA1C0D79E000927C67 /* TimelineTableViewCell.swift */,
+				E02347171B677CD3004F2DBE /* LaunchScreen.xib */,
+				E02347151B677CD3004F2DBE /* Images.xcassets */,
+				E023470C1B677CD3004F2DBE /* Supporting Files */,
 			);
 			path = Securus;
 			sourceTree = "<group>";
