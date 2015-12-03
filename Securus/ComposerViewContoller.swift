@@ -22,25 +22,6 @@ class ComposerViewController: UIViewController, UITextViewDelegate, CLLocationMa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Authorize and update location
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        
-        let status = CLLocationManager.authorizationStatus()
-        if status == CLAuthorizationStatus.AuthorizedWhenInUse {
-            locationManager.startUpdatingLocation()
-        } else {
-            print("Location Status Not Authorized")
-            let alert = UIAlertView(title: "Location Services Required", message: "Go to Settings > Securus > Locations > When Using the App to enable location services", delegate: self, cancelButtonTitle: "OK")
-            alert.show()
-        }
-        
-        
-        // Retrieving the location co-ordinate
-        // let myLocation:CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: locValue.latitude, longitude: locValue.longitude)
-        // Do reverseGeocodeLocation to get name of city, zip-code etc...
-        
-        
         // Show the current visitor's username
         if let pUserName = PFUser.currentUser()?["username"] as? String {
             self.userNameLabel.text = "@" + pUserName
@@ -60,6 +41,38 @@ class ComposerViewController: UIViewController, UITextViewDelegate, CLLocationMa
         placeholderLabel.frame.origin = CGPointMake(5, descriptionTextView.font!.pointSize / 2)
         placeholderLabel.textColor = UIColor(white: 0, alpha: 0.3)
         placeholderLabel.hidden = !descriptionTextView.text.isEmpty
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        // Authorize and update location
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        
+        let status = CLLocationManager.authorizationStatus()
+        if status == CLAuthorizationStatus.AuthorizedWhenInUse {
+            locationManager.startUpdatingLocation()
+        } else {
+            print("Location Status Not Authorized")
+            let alertController = UIAlertController (title: "Location Services Required", message: "Enable Location Services in Settings", preferredStyle: .Alert)
+            
+            let settingsAction = UIAlertAction(title: "Settings", style: .Default) { (_) -> Void in
+                UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString)!)
+            }
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: .Default, handler: nil)
+            alertController.addAction(settingsAction)
+            alertController.addAction(cancelAction)
+            
+            self.presentViewController(alertController, animated: true, completion: nil);
+            //let alert = UIAlertView(title: "Location Services Required", message: "Go to Settings > Securus > Locations > When Using the App to enable location services", delegate: self, cancelButtonTitle: "OK")
+            // alert.show()
+            //UIApplication.sharedApplication().openURL(NSURL(string: UIApplicationOpenSettingsURLString))
+        }
+        
+        
+        // Retrieving the location co-ordinate
+        // let myLocation:CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: locValue.latitude, longitude: locValue.longitude)
+        // Do reverseGeocodeLocation to get name of city, zip-code etc...
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

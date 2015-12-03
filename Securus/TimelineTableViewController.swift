@@ -98,8 +98,6 @@ class TimelineTableViewController: UITableViewController {
             (users, error)->Void in
             if error == nil{
                 cell.usernameText.text = users?.last?.username
-                
-
             }
         }
         
