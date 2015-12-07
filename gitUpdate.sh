@@ -1,5 +1,5 @@
 # A shell script which when run updates git
-# Usage: gitUpdate
+# Usage: ./gitUpdate.sh
 
 #!/bin/bash
 git pull
