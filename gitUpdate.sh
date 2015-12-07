@@ -1,4 +1,4 @@
-# A shell script which when run updates git
+# Shell script which when run updates git
 # Usage: ./gitUpdate.sh
 #!/bin/bash
 git pull
