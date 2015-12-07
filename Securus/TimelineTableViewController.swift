@@ -143,6 +143,7 @@ class TimelineTableViewController: UITableViewController {
                 } else {
                     print (error)
                 }
+                usleep(200000)
                 self.loadData()
             }
         }
@@ -159,7 +160,10 @@ class TimelineTableViewController: UITableViewController {
             }
         }
 
-        return [deleteAction]
+        let viewMap = UITableViewRowAction(style: .Normal, title: "Map") {(action: UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
+            print("Will write code for map view")
+        }
+        return [deleteAction, viewMap]
     }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -178,6 +182,7 @@ class TimelineTableViewController: UITableViewController {
             } else if let the_event = object{
                 the_event["votes"] = votes
                 the_event.saveInBackground()
+                usleep(100000)
             }
         })
         refresh(self)
@@ -195,6 +200,7 @@ class TimelineTableViewController: UITableViewController {
             } else if let the_event = object{
                 the_event["votes"] = votes
                 the_event.saveInBackground()
+                usleep(100000)
             }
         })
         refresh(self)
